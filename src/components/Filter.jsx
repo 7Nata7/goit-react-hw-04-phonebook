@@ -2,27 +2,25 @@ import css from './Filter.module.css';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default class Filter extends React.Component {
-  handleFilterChange = event => {
+export const Filter = ({ title, onFilterChange }) => {
+  const handleFilterChange = event => {
     const searchQuery = event.target.value;
-    this.props.onFilterChange(searchQuery);
+    onFilterChange(searchQuery);
   };
 
-  render() {
-    return (
-      <div>
-        <h2 className={css.filter_name}>{this.props.title}</h2>
-        <label>
-          <input
-            className={css.input}
-            type="text"
-            onChange={this.handleFilterChange}
-          />
-        </label>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <h2 className={css.filter_name}>{title}</h2>
+      <label>
+        <input
+          className={css.input}
+          type="text"
+          onChange={handleFilterChange}
+        />
+      </label>
+    </div>
+  );
+};
 
 Filter.propTypes = {
   title: PropTypes.string.isRequired,

@@ -1,44 +1,37 @@
 import css from './ContactForm.module.css'
-import React from "react";
+import React, { useState } from 'react';
 import PropTypes from "prop-types";
 
-export default class ContactForm extends React.Component {
-  state = {
-    name: "",
-    number: "",
+export const ContactForm = ({ title, onAddContact}) => {
+const [name, setName] = useState("");
+const [number, setNumber] = useState("");
+
+
+  const handleInputChange = (event) => {
+    const {name, value} = event.target;
+    if (name === "name") {
+      setName(value); 
+    } else if (name === "number") {
+      setNumber(value);
+    }
   };
 
-  handleInputChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    const { name, number } = this.state;
-
-    this.props.onAddContact(name, number);
-
-    this.setState({
-      name: '',
-      number: '',
-    });
+    onAddContact(name, number);
+    setName("");
+    setNumber("");
   };
-
-
-  render() {
-    const { name, number } = this.state;
 
     return (
       <div>
-        <h1 className={css.title_main}>{this.props.title}</h1>
-        <form className={css.section} onSubmit={this.handleSubmit}>
+        <h1 className={css.title_main}>{title}</h1>
+        <form className={css.section} onSubmit={handleSubmit}>
           <label>
             <p className={css.label}>Name</p>
             <input
               className={css.input}
-              onChange={this.handleInputChange}
+              onChange={handleInputChange}
               value={name}
               type="text"
               name="name"
@@ -51,7 +44,7 @@ export default class ContactForm extends React.Component {
             <p className={css.label}>Number</p>
             <input
               className={css.input}
-              onChange={this.handleInputChange}
+              onChange={handleInputChange}
               value={number}
               type="tel"
               name="number"
@@ -67,7 +60,6 @@ export default class ContactForm extends React.Component {
       </div>
     );
   }
-}
 
 ContactForm.propTypes = {
   title: PropTypes.string.isRequired,

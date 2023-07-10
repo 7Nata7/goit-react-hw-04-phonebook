@@ -1,8 +1,7 @@
 import css from './ContactList.module.css';
-import React from 'react';
 import PropTypes from 'prop-types';
 
-const ContactList = ({ title, contacts, onRemoveContact }) => {
+export const ContactList = ({ title, contacts, onRemoveContact }) => {
   return (
     <div>
       <h2 className={css.title_next}>{title}</h2>
@@ -32,5 +31,3 @@ ContactList.propTypes = {
   ).isRequired,
   onRemoveContact: PropTypes.func.isRequired,
 };
-
-export default ContactList;
