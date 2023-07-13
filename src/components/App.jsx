@@ -6,8 +6,11 @@ import { nanoid } from 'nanoid';
 import { useState, useEffect } from 'react';
 
 export const App = () => {
-  const [contacts, setContacts] = useState([]);
   const [filter, setFilter] = useState('');
+
+  const [contacts, setContacts] = useState(
+    () => JSON.parse(localStorage.getItem('contacts')) ?? []
+  );
 
   const onRemoveContact = contactId => {
     setContacts(contacts.filter(contact => contact.id !== contactId));
@@ -36,14 +39,6 @@ export const App = () => {
   const handleFilterChange = searchQuery => {
     setFilter(searchQuery);
   };
-
-  useEffect(() => {
-    const stringifiedContacts = localStorage.getItem('contacts');
-    const contacts = JSON.parse(stringifiedContacts);
-    if (contacts) {
-      setContacts(contacts);
-    }
-  }, []);
 
   useEffect(() => {
     const stringifiedContacts = JSON.stringify(contacts);
